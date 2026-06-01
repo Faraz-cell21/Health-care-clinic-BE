@@ -1,8 +1,6 @@
 import { Request, Response } from 'express';
+import { sendResponse } from '../../../common/utils/api-response';
 
 export const getHealth = (_req: Request, res: Response): void => {
-    res.status(200).json({
-        success: true,
-        message: "Server is healthy",
-    })
-}
+  sendResponse(res, 200, 'Server is healthy');
+};
