@@ -1,8 +1,15 @@
 import { z } from 'zod';
 
 export const envSchema = z.object({
-  NODE_ENV: z.enum(['development', 'production', 'test']),
-  PORT: z.string(),
+  NODE_ENV: z.enum([
+    'development',
+    'test',
+    'production',
+  ]),
+
+  PORT: z.coerce.number().default(5000),
 });
 
-export type ENV = z.infer<typeof envSchema>;
+export type Env = z.infer<
+  typeof envSchema
+>;
