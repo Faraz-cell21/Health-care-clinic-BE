@@ -1,0 +1,27 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+      "title": "Healthcare Clinic Management API",
+      "version": "1.0.0",
+      "description": "Healthcare Clinic Management Ecosystem API"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:5000/api/v1",
+        "description": "Development Server"
+      }
+    ],
+    "paths": {
+      "/health": {
+        "get": {
+          "summary": "Health Check",
+          "tags": ["Health"],
+          "responses": {
+            "200": {
+              "description": "Server is healthy"
+            }
+          }
+        }
+      }
+    }
+  }
