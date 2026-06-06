@@ -5,6 +5,8 @@ export const COLLECTION_NAMES = {
   
     PERMISSIONS: 'permissions',
   
+    SESSIONS: 'sessions',
+  
     PATIENTS: 'patients',
   
     DOCTORS: 'doctors',
