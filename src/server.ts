@@ -1,9 +1,23 @@
 import app from './app';
-import { env } from './config/env';
 import { logger } from './common/logger/logger';
+import { connectDatabase } from './config/database';
+import { env } from './config/env';
 
-app.listen(env.PORT, () => {
-  logger.info(
-    `Server running on port ${env.PORT}`,
-  );
-});
+const startServer =
+  async (): Promise<void> => {
+    try {
+      await connectDatabase();
+
+      app.listen(env.PORT, () => {
+        logger.info(
+          `Server running on port ${env.PORT}`,
+        );
+      });
+    } catch (error) {
+      logger.error(error);
+
+      process.exit(1);
+    }
+  };
+
+void startServer();
