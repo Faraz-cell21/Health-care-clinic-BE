@@ -22,6 +22,18 @@ export const envSchema = z.object({
 
   JWT_REFRESH_EXPIRES_IN:
     z.string().min(1),
+
+  SUPER_ADMIN_EMAIL:
+    z.string().email(),
+
+  SUPER_ADMIN_PASSWORD:
+    z.string().min(8),
+
+  SUPER_ADMIN_FIRST_NAME:
+    z.string().min(1),
+
+  SUPER_ADMIN_LAST_NAME:
+    z.string().min(1),
 });
 
 export type Env = z.infer<
