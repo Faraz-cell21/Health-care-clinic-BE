@@ -146,4 +146,22 @@ export class AuthService {
       userId,
     );
   }
+
+  async getCurrentUser(
+    userId: string,
+  ) {
+    const user =
+      await this.userRepository.findById(
+        userId,
+      );
+  
+    if (!user) {
+      throw new AppError(
+        'User not found',
+        404,
+      );
+    }
+  
+    return user;
+  }
 }

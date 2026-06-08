@@ -1,16 +1,25 @@
 import { User } from '../models/user.model';
 
 export class UserRepository {
-  async create(data: Record<string, unknown>) {
+  async create(
+    data: Record<string, unknown>,
+  ) {
     return User.create(data);
   }
 
   async findById(id: string) {
     return User.findById(id)
-      .populate('role');
+      .populate({
+        path: 'role',
+        populate: {
+          path: 'permissions',
+        },
+      });
   }
 
-  async findByEmail(email: string) {
+  async findByEmail(
+    email: string,
+  ) {
     return User.findOne({
       email,
     })
