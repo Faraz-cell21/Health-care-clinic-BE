@@ -10,6 +10,7 @@ import {
   } from '../../../database/base.schema';
   import { COLLECTION_NAMES } from '../../../database/constants/collection-names';
   import { softDeletePlugin } from '../../../database/plugins/soft-delete.plugin';
+  import '../../permissions/models/permission.model';
   
   const roleSchema = new Schema(
     {

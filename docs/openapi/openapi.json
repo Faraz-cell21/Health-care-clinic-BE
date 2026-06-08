@@ -22,6 +22,222 @@
             }
           }
         }
+      },
+      "/auth/login": {
+        "post": {
+          "summary": "Login",
+          "description": "Authenticate a user with email and password. Returns access and refresh tokens along with the user profile.",
+          "tags": ["Auth"],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginRequest"
+                },
+                "example": {
+                  "email": "admin@example.com",
+                  "password": "password123"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Login successful",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/LoginResponse"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Validation failed",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ValidationErrorResponse"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Invalid credentials",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ErrorResponse"
+                  },
+                  "example": {
+                    "success": false,
+                    "message": "Invalid credentials"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "LoginRequest": {
+          "type": "object",
+          "required": ["email", "password"],
+          "properties": {
+            "email": {
+              "type": "string",
+              "format": "email",
+              "example": "admin@example.com"
+            },
+            "password": {
+              "type": "string",
+              "format": "password",
+              "minLength": 8,
+              "example": "password123"
+            }
+          }
+        },
+        "LoginResponse": {
+          "type": "object",
+          "properties": {
+            "success": {
+              "type": "boolean",
+              "example": true
+            },
+            "message": {
+              "type": "string",
+              "example": "Login successful"
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "accessToken": {
+                  "type": "string",
+                  "description": "JWT access token"
+                },
+                "refreshToken": {
+                  "type": "string",
+                  "description": "JWT refresh token"
+                },
+                "user": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "User": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "507f1f77bcf86cd799439011"
+            },
+            "firstName": {
+              "type": "string",
+              "example": "John"
+            },
+            "lastName": {
+              "type": "string",
+              "example": "Doe"
+            },
+            "email": {
+              "type": "string",
+              "format": "email",
+              "example": "admin@example.com"
+            },
+            "userType": {
+              "type": "string",
+              "example": "SUPER_ADMIN"
+            },
+            "isActive": {
+              "type": "boolean",
+              "example": true
+            },
+            "role": {
+              "$ref": "#/components/schemas/Role"
+            }
+          }
+        },
+        "Role": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string",
+              "example": "SUPER_ADMIN"
+            },
+            "description": {
+              "type": "string",
+              "nullable": true
+            },
+            "permissions": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Permission"
+              }
+            }
+          }
+        },
+        "Permission": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string",
+              "example": "users:read"
+            },
+            "resource": {
+              "type": "string",
+              "example": "users"
+            },
+            "action": {
+              "type": "string",
+              "example": "read"
+            }
+          }
+        },
+        "ErrorResponse": {
+          "type": "object",
+          "properties": {
+            "success": {
+              "type": "boolean",
+              "example": false
+            },
+            "message": {
+              "type": "string"
+            }
+          }
+        },
+        "ValidationErrorResponse": {
+          "type": "object",
+          "properties": {
+            "success": {
+              "type": "boolean",
+              "example": false
+            },
+            "message": {
+              "type": "string",
+              "example": "Validation Failed"
+            },
+            "errors": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
