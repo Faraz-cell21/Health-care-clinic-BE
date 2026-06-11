@@ -32,6 +32,10 @@ export interface IUser {
   role: Types.ObjectId;
   isActive: boolean;
   lastLoginAt?: Date | null;
+  failedLoginAttempts: number;
+  lockedUntil?: Date | null;
+  passwordChangedAt?: Date | null;
+  passwordHistory: string[];
 }
 
 type UserModel = Model<
@@ -105,6 +109,26 @@ const userSchema = new Schema<
     lastLoginAt: {
       type: Date,
       default: null,
+    },
+
+    failedLoginAttempts: {
+      type: Number,
+      default: 0,
+    },
+    
+    lockedUntil: {
+      type: Date,
+      default: null,
+    },
+    
+    passwordChangedAt: {
+      type: Date,
+      default: null,
+    },
+    
+    passwordHistory: {
+      type: [String],
+      default: [],
     },
   },
   baseSchemaOptions,

@@ -51,4 +51,50 @@ export class UserRepository {
       },
     );
   }
+
+  async incrementFailedLogin(
+    userId: string,
+  ) {
+    return User.findByIdAndUpdate(
+      userId,
+      {
+        $inc: {
+          failedLoginAttempts: 1,
+        },
+      },
+      {
+        new: true,
+      },
+    );
+  }
+  
+  async lockAccount(
+    userId: string,
+    lockedUntil: Date,
+  ) {
+    return User.findByIdAndUpdate(
+      userId,
+      {
+        lockedUntil,
+      },
+      {
+        new: true,
+      },
+    );
+  }
+  
+  async resetFailedLogin(
+    userId: string,
+  ) {
+    return User.findByIdAndUpdate(
+      userId,
+      {
+        failedLoginAttempts: 0,
+        lockedUntil: null,
+      },
+      {
+        new: true,
+      },
+    );
+  }
 }
